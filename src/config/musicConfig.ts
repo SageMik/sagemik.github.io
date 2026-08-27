@@ -17,8 +17,8 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	// 播放模式：'list'=列表循环, 'one'=单曲循环, 'random'=随机播放
 	playMode: "list",
 
-	// 是否显启用歌词
-	showLyrics: false,
+	// 是否启用歌词
+	showLyrics: true,
 
 	// Meting API 配置
 	meting: {
@@ -46,6 +46,14 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	// 2. 或者直接填入歌词字符串内容
 	// lrc: "[00:00.00]歌词内容...",
 	local: {
-		playlist: [],
+		playlist: [
+			{
+				name: "INTERGALACTIA",
+				artist: "IA,KIRA",
+				url: "/assets/music/IA,KIRA - INTERGALACTIA.mp3",
+				cover: "/assets/music/IA,KIRA - INTERGALACTIA.jpg",
+				lrc: "/assets/music/lrc/IA,KIRA - INTERGALACTIA.lrc",
+			},
+		],
 	},
 };

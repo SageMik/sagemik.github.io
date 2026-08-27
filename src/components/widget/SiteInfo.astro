@@ -278,7 +278,9 @@ const detailItems: {
       const btn = this.querySelector(
         ".site-info-toggle-btn",
       ) as HTMLButtonElement | null;
-      const detail = this.querySelector(".site-info-detail");
+      const detail = this.querySelector(
+        ".site-info-detail",
+      ) as HTMLElement | null;
       const textEl = this.querySelector(".site-info-toggle-text");
       const iconEl = this.querySelector(".site-info-toggle-icon");
       if (!btn || !detail || !textEl) return;

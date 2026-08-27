@@ -110,6 +110,7 @@ const viewConfigStr = JSON.stringify({
             iconVolMute: widget.querySelector('.icon-vol-mute'),
             volContainer: widget.querySelector('.vol-container'),
             volBar: widget.querySelector('.vol-bar'),
+            volThumb: widget.querySelector('.vol-thumb'),
             btnLrc: widget.querySelector('.btn-lrc-toggle'),
             iconLrcOn: widget.querySelector('.icon-lrc-on'),
             iconLrcOff: widget.querySelector('.icon-lrc-off'),
@@ -135,6 +136,7 @@ const viewConfigStr = JSON.stringify({
             isUserScrolling: false,
             scrollTimeout: null,
             currentLrcIndex: -1,
+            scrubbing: false, // 拖动进度条中：暂停 fm:time 覆盖，拖动结束才应用 seek
             vs: {
                 playlist: [],
                 currentIndex: -1,
@@ -213,6 +215,7 @@ const viewConfigStr = JSON.stringify({
         function updateVolumeUI(volume, isMuted) {
             var pct = isMuted ? 0 : volume * 100;
             ui.volBar.style.width = pct + '%';
+            ui.volThumb.style.left = pct + '%';
             ui.volContainer.setAttribute('aria-valuenow', Math.round(pct).toString());
             if (isMuted || volume === 0) {
                 ui.iconVolHigh.classList.add('hidden');
@@ -468,15 +471,21 @@ const viewConfigStr = JSON.stringify({
             });
 
             // Auto-scroll unless user is scrolling
-            if (index !== -1 && !local.isUserScrolling) {
-                var line = ui.lrcContainer.querySelector('.lrc-line[data-index="' + index + '"]');
-                if (line) {
-                    var containerHeight = ui.lrcContainer.clientHeight;
-                    var lineOffset = line.offsetTop;
-                    var lineHeight = line.offsetHeight;
-                    var targetScroll = lineOffset - (containerHeight / 2) + (lineHeight / 2);
-                    ui.lrcContainer.scrollTo({ top: targetScroll, behavior: 'smooth' });
-                }
+            if (local.isUserScrolling) return;
+
+            // 无匹配歌词（如进度拖到开头、首句之前），滚回顶部
+            if (index === -1) {
+                ui.lrcContainer.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+
+            var line = ui.lrcContainer.querySelector('.lrc-line[data-index="' + index + '"]');
+            if (line) {
+                var containerHeight = ui.lrcContainer.clientHeight;
+                var lineOffset = line.offsetTop;
+                var lineHeight = line.offsetHeight;
+                var targetScroll = lineOffset - (containerHeight / 2) + (lineHeight / 2);
+                ui.lrcContainer.scrollTo({ top: targetScroll, behavior: 'smooth' });
             }
         }
 
@@ -551,6 +560,8 @@ const viewConfigStr = JSON.stringify({
         });
 
         on('fm:time', function (e) {
+            // 拖动进度条期间不覆盖预览位置，保持原有播放进度
+            if (local.scrubbing) return;
             var d = e.detail;
             ui.progressBar.style.width = d.progress + '%';
             ui.progressThumb.style.left = d.progress + '%';
@@ -586,19 +597,56 @@ const viewConfigStr = JSON.stringify({
         ui.btnRepeat.addEventListener('click', function () { mgr.cyclePlayMode(); });
         ui.btnMute.addEventListener('click', function () { mgr.toggleMute(); });
 
-        ui.volContainer.addEventListener('click', function (e) {
-            var rect = ui.volContainer.getBoundingClientRect();
-            var x = e.clientX - rect.left;
-            var val = Math.max(0, Math.min(1, x / rect.width));
-            mgr.setVolume(val);
+        // 拖动支持：pointerdown 按下即开始拖拽，live 在按下/移动时执行（实时反馈），
+        // finish 在松开时执行，apply 表示是否为正常结束（pointercancel 打断时为 false）
+        function makeDraggable(el, live, finish) {
+            var dragging = false;
+            el.addEventListener('pointerdown', function (e) {
+                dragging = true;
+                el.setPointerCapture(e.pointerId);
+                e.preventDefault();
+                live(e);
+            });
+            el.addEventListener('pointermove', function (e) {
+                if (dragging) live(e);
+            });
+            function end(e, apply) {
+                if (!dragging) return;
+                dragging = false;
+                if (el.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId);
+                if (finish) finish(e, apply);
+            }
+            el.addEventListener('pointerup', function (e) { end(e, true); });
+            el.addEventListener('pointercancel', function (e) { end(e, false); });
+        }
+
+        function sliderValue(el, e) {
+            var rect = el.getBoundingClientRect();
+            return Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        }
+
+        // 音量条：拖动实时生效
+        makeDraggable(ui.volContainer, function (e) {
+            mgr.setVolume(sliderValue(ui.volContainer, e));
         });
 
-        ui.progressContainer.addEventListener('click', function (e) {
-            var rect = ui.progressContainer.getBoundingClientRect();
-            var clickX = e.clientX - rect.left;
-            var percent = Math.min(Math.max(clickX / rect.width, 0), 1);
-            mgr.seek(percent);
-        });
+        // 进度条：拖动只更新预览位置，松开才应用 seek，期间保持原有播放进度
+        function progressPreview(e) {
+            local.scrubbing = true;
+            // 拖动时即时跟随，避免 width 过渡造成延迟
+            ui.progressBar.style.transition = 'none';
+            var pct = sliderValue(ui.progressContainer, e) * 100;
+            ui.progressBar.style.width = pct + '%';
+            ui.progressThumb.style.left = pct + '%';
+            ui.progressContainer.setAttribute('aria-valuenow', Math.round(pct).toString());
+        }
+        function progressFinish(e, apply) {
+            local.scrubbing = false;
+            // 恢复默认过渡，重新响应 fm:time 的平滑更新
+            ui.progressBar.style.transition = '';
+            if (apply) mgr.seek(sliderValue(ui.progressContainer, e));
+        }
+        makeDraggable(ui.progressContainer, progressPreview, progressFinish);
 
         // ── Drawer logic (local state) ───────────────────────────
         ui.btnLrc.addEventListener('click', function () {
