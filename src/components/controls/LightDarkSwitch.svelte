@@ -31,7 +31,10 @@ function switchScheme(newMode: LIGHT_DARK_MODE) {
 	mode = newMode;
 	setTheme(newMode);
 	updateDisplayedMode();
+	// 选择后移出焦点，使 :focus-within 失效收起菜单（与左侧菜单项点击跳转后菜单消失的行为一致）
+	(document.activeElement as HTMLElement | null)?.blur();
 }
+
 
 // 更新显示的主题（用于显示当前实际主题）
 function updateDisplayedMode() {
@@ -115,8 +118,8 @@ onMount(() => {
 });
 </script>
 
-<div class="relative z-50">
-	<button aria-label="Light/Dark Mode" aria-haspopup="menu" aria-controls="theme-mode-panel" aria-expanded="false" class="relative btn-plain scale-animation rounded-lg h-9 w-9 md:h-11 md:w-11 active:scale-90" id="scheme-switch">
+<div class="dropdown-container relative z-50" data-dropdown>
+	<button aria-label="Light/Dark Mode" aria-haspopup="menu" aria-controls="theme-mode-panel" aria-expanded="false" class="relative btn-plain scale-animation rounded-lg h-9 w-9 md:h-11 md:w-11 active:scale-90" id="scheme-switch" data-dropdown-trigger>
         <div class="absolute inset-0 flex items-center justify-center" class:opacity-0={displayedMode !== LIGHT_MODE}>
             <Icon icon="material-symbols:wb-sunny-outline-rounded" class="text-[1.25rem]"></Icon>
         </div>
@@ -124,8 +127,8 @@ onMount(() => {
             <Icon icon="material-symbols:dark-mode-outline-rounded" class="text-[1.25rem]"></Icon>
         </div>
     </button>
-    <div id="theme-mode-panel" class="absolute transition float-panel-closed top-11 -right-2 pt-5 z-50" role="menu" aria-labelledby="scheme-switch" data-floating-panel data-floating-panel-trigger="scheme-switch" inert aria-hidden="true">
-        <DropdownPanel>
+    <div id="theme-mode-panel" class="dropdown-menu z-50" data-dropdown-menu role="menu" aria-labelledby="scheme-switch">
+        <DropdownPanel class="dropdown-content">
             <DropdownItem
                 role="menuitem"
                 isActive={mode === LIGHT_MODE}

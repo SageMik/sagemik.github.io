@@ -58,17 +58,11 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			// 是否启用主页横幅文字
 			enable: true,
 			// 主页横幅主标题
-			title: "Lovely firefly!",
+			title: "SageMik's Blog",
 			// 主页横幅主标题字体大小
 			titleSize: "4.5rem",
 			// 主页横幅副标题
 			subtitle: [
-				"In Reddened Chrysalis, I Once Rest",
-				"From Shattered Sky, I Free Fall",
-				"Amidst Silenced Stars, I Deep Sleep",
-				"Upon Lighted Fyrefly, I Soon Gaze",
-				"From Undreamt Night, I Thence Shine",
-				"In Finalized Morrow, I Full Bloom",
 			],
 			// 主页横幅副标题字体大小
 			subtitleSize: "1.5rem",
@@ -76,7 +70,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 				// 是否启用打字机效果
 				// 打字机开启 → 循环显示所有副标题
 				// 打字机关闭 → 每次刷新随机显示一条副标题
-				enable: true,
+				enable: false,
 				// 打字速度（毫秒）
 				speed: 100,
 				// 删除速度（毫秒）
@@ -89,18 +83,18 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			// 首页横幅标题下方的链接图标（可选，支持 showName 显示文字）
 			// 图标支持 Iconify 格式：fa7-brands:github、fa7-solid:envelope、mdi:rss 等
 			links: [
-			{
-				name: "GitHub",
-				icon: "fa7-brands:github",
-				url: "https://github.com/CuteLeaf/Firefly",
-				showName: true,
-			},
-			{
-			name: "RSS",
-			icon: "fa7-solid:rss",
-			url: "/rss/",
-		},
-		],
+				{
+					name: "GitHub",
+					icon: "fa7-brands:github",
+					url: "https://github.com/SageMik",
+					showName: true,
+				},
+				{
+					name: "RSS",
+					icon: "fa7-solid:rss",
+					url: "/rss/",
+				},
+			],
 		},
 		// 壁纸轮播配置，横幅壁纸和全屏壁纸共享，仅在配置多张图片时生效
 		carousel: {
@@ -125,7 +119,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		// 导航栏配置
 		navbar: {
 			// 导航栏透明模式："semi" 半透明，"full" 完全透明，"semifull" 动态透明
-			transparentMode: "semi",
+			transparentMode: "full",
 			// 毛玻璃模糊度，0 即关闭导航栏的毛玻璃
 			// 注意：导航栏子菜单与浮动面板始终保留毛玻璃，模糊度跟随此项但有最小值
 			blur: 5,
