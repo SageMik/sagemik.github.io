@@ -36,20 +36,6 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		],
 	});
 
-	//社交及其子菜单
-	links.push({
-		name: "社交",
-		url: "#",
-		icon: "material-symbols:group",
-		children: [
-			// 友链
-			LinkPresets.Friends,
-
-			// 留言
-			LinkPresets.Guestbook,
-		],
-	});
-
 	// 我的及其子菜单
 	links.push({
 		name: "我的",
@@ -85,9 +71,6 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		url: "#",
 		icon: "material-symbols:info",
 		children: [
-			// 打赏
-			LinkPresets.Sponsor,
-
 			// 关于页面
 			LinkPresets.About,
 		],
@@ -111,18 +94,6 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 				url: "https://gitee.com/CuteLeaf/Firefly",
 				external: true,
 				icon: "fa7-brands:gitee",
-			},
-			{
-				name: "QQ交流群",
-				url: "https://qm.qq.com/q/ZGsFa8qX2G",
-				external: true,
-				icon: "fa7-brands:qq",
-			},
-			{
-				name: "Firefly文档",
-				url: "https://docs-firefly.cuteleaf.cn",
-				external: true,
-				icon: "material-symbols:docs",
 			},
 		],
 	});
@@ -234,7 +205,7 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		pageKey: "sponsor",
 	},
 	About: {
-		name: "关于我",
+		name: "关于",
 		url: "/about/",
 		icon: "material-symbols:person",
 	},
