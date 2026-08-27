@@ -217,6 +217,8 @@ const managerConfigStr = JSON.stringify({
                 state.isPlaying = true;
                 state.error = null;
                 emit('fm:play-state', { isPlaying: true });
+                // 上次淡出把音量置 0 后切歌，这里淡入恢复，避免新歌静音
+                if (audio.volume === 0) fadeIn();
             }).catch(function (e) {
                 if (ver !== loadVersion) return; // stale, discard
                 if (e.name === 'AbortError') return; // interrupted by new load
@@ -265,19 +267,75 @@ const managerConfigStr = JSON.stringify({
     }
 
     // ── Playback controls ────────────────────────────────────
+    // 音频淡入淡出：暂停时音量平滑降到 0 再真正 pause，播放时从 0 升到设定音量
+    var FADE_MS = 400;
+    var fadeTimer = null;
+    var fadingOut = false;
+
+    function cancelFade() {
+        if (fadeTimer) {
+            clearInterval(fadeTimer);
+            fadeTimer = null;
+        }
+    }
+
+    function fadeOutThenPause() {
+        // 点击瞬间先切换 UI 状态，音频再继续淡出，避免按钮延迟
+        state.isPlaying = false;
+        emit('fm:play-state', { isPlaying: false });
+        if (state.isMuted) {
+            audio.pause();
+            return;
+        }
+        cancelFade();
+        fadingOut = true;
+        var start = performance.now();
+        var from = audio.volume;
+        fadeTimer = setInterval(function () {
+            var p = Math.min(1, (performance.now() - start) / FADE_MS);
+            audio.volume = from * (1 - p);
+            if (p >= 1) {
+                cancelFade();
+                fadingOut = false;
+                audio.pause();
+            }
+        }, 16);
+    }
+
+    function fadeIn() {
+        if (state.isMuted) return;
+        cancelFade();
+        fadingOut = false;
+        var start = performance.now();
+        fadeTimer = setInterval(function () {
+            var p = Math.min(1, (performance.now() - start) / FADE_MS);
+            // 目标跟随音量条，拖音量时也能平滑过渡
+            audio.volume = state.volume * p;
+            if (p >= 1) cancelFade();
+        }, 16);
+    }
+
     function togglePlay() {
+        if (fadingOut) {
+            // 淡出过程中再次点击：取消淡出，保持播放
+            cancelFade();
+            fadingOut = false;
+            audio.volume = state.isMuted ? 0 : state.volume;
+            state.isPlaying = true;
+            emit('fm:play-state', { isPlaying: true });
+            return;
+        }
         if (audio.paused) {
             audio.play().then(function () {
                 state.isPlaying = true;
                 emit('fm:play-state', { isPlaying: true });
+                fadeIn();
             }).catch(function (e) {
                 if (e.name === 'AbortError') return;
                 console.warn('Playback failed:', e);
             });
         } else {
-            audio.pause();
-            state.isPlaying = false;
-            emit('fm:play-state', { isPlaying: false });
+            fadeOutThenPause();
         }
     }
 
@@ -331,14 +389,32 @@ const managerConfigStr = JSON.stringify({
         emit('fm:volume', { volume: state.volume, isMuted: state.isMuted });
     }
 
+    // 根据当前播放时间计算歌词索引并广播；seek/seekToTime 后立即调用，
+    // 避免依赖 timeupdate 的延迟/不可靠触发（暂停状态下尤其如此）
+    function syncLyricIndex() {
+        if (state.lyrics.length === 0) return;
+        var ct = audio.currentTime;
+        var idx = -1;
+        for (var i = 0; i < state.lyrics.length; i++) {
+            if (ct >= state.lyrics[i].time) idx = i;
+            else break;
+        }
+        if (idx !== state.currentLrcIndex) {
+            state.currentLrcIndex = idx;
+            emit('fm:lrc-index', { index: idx });
+        }
+    }
+
     function seek(percent) {
         if (!audio.duration) return;
         audio.currentTime = Math.max(0, Math.min(1, percent)) * audio.duration;
+        syncLyricIndex();
     }
 
     function seekToTime(time) {
         if (!audio.duration) return;
         audio.currentTime = Math.max(0, Math.min(time, audio.duration));
+        syncLyricIndex();
     }
 
     function playTrackByIndex(index) {
@@ -365,17 +441,7 @@ const managerConfigStr = JSON.stringify({
         });
 
         // Lyrics sync
-        if (state.lyrics.length > 0) {
-            var idx = -1;
-            for (var i = 0; i < state.lyrics.length; i++) {
-                if (ct >= state.lyrics[i].time) idx = i;
-                else break;
-            }
-            if (idx !== state.currentLrcIndex) {
-                state.currentLrcIndex = idx;
-                emit('fm:lrc-index', { index: idx });
-            }
-        }
+        syncLyricIndex();
     });
 
     audio.addEventListener('ended', function () {
