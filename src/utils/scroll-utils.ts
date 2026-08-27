@@ -1,8 +1,6 @@
 import { siteConfig } from "@/config";
 import {
 	BANNER_HEIGHT,
-	BANNER_HEIGHT_HOME,
-	BANNER_HEIGHT_NON_HOME,
 } from "@/constants/constants";
 import { isBannerMode } from "@/utils/banner-utils";
 import { updateSidebarStickySpacing } from "@/utils/grid-layout-utils";
@@ -11,6 +9,9 @@ const stickyNavbar = siteConfig.navbar.stickyNavbar ?? false;
 const backToTopBtn = document.getElementById("back-to-top-btn");
 const toc = document.getElementById("toc-wrapper");
 const navbar = document.getElementById("navbar-wrapper");
+
+// 记录上一次滚动位置，用于判断滚动方向（reimu 式方向化隐藏）
+let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
 /** 优化的滚动处理函数（从 Layout.astro 迁出；visit:end 切页后也会调用） */
 export function scrollFunction(): void {
@@ -54,17 +55,15 @@ export function scrollFunction(): void {
 		});
 	} else if (isBannerMode() && navbar) {
 		operations.push(() => {
-			const isHome = document.body.classList.contains("is-home");
-			const threshold =
-				window.innerHeight *
-					((isHome ? BANNER_HEIGHT_HOME : BANNER_HEIGHT_NON_HOME) / 100) -
-				88;
-
-			if (scrollTop >= threshold) {
+			const scrollTop =
+				window.pageYOffset || document.documentElement.scrollTop;
+			// reimu 式方向化隐藏：向下滚动时隐藏导航栏，向上滚动时显示
+			if (scrollTop > lastScrollTop) {
 				navbar.classList.add("navbar-hidden");
-			} else {
+			} else if (scrollTop < lastScrollTop) {
 				navbar.classList.remove("navbar-hidden");
 			}
+			lastScrollTop = scrollTop;
 		});
 	}
 

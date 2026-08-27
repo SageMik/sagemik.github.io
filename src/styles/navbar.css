@@ -73,6 +73,46 @@
 }
 
 
+/* ============================================
+ * 顶部导航栏文字/图标：透明头图阶段使用白色
+ * 普通态为纯白，hover / focus 态切换为主题色（非白），
+ * 保证覆盖在头图上时文字清晰可辨。
+ * 注：仅作用于 #navbar，不影响页面内其他 .btn-plain 按钮
+ * ============================================ */
+#navbar .btn-plain:not(.dropdown-item),
+#navbar .main-nav-link {
+    color: #fff;
+    opacity: 1;
+    &:hover,
+    &:focus-visible,
+    &:active {
+        color: var(--primary);
+    }
+}
+
+/* 日夜切换下拉：右对齐触发器按钮（复用 .dropdown-container 机制） */
+#scheme-switch + .dropdown-menu {
+    @apply right-0 left-auto;
+}
+
+/* 下拉菜单内的按钮不受上述白色规则影响，恢复原配色 */
+#navbar .dropdown-content .btn-plain,
+#navbar .float-panel .btn-plain {
+    color: rgb(0 0 0 / 0.75);
+    &:hover,
+    &:focus-visible {
+        color: var(--primary);
+    }
+}
+:root.dark #navbar .dropdown-content .btn-plain,
+:root.dark #navbar .float-panel .btn-plain {
+    color: rgb(255 255 255 / 0.75);
+    &:hover,
+    &:focus-visible {
+        color: var(--primary);
+    }
+}
+
 /* 通用滚动阴影：用于提升导航栏与页面内容的分层感 */
 #navbar.navbar-sticky-shadow>div {
     box-shadow: var(--shadow-navbar) !important;

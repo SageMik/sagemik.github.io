@@ -48,10 +48,6 @@ export function initLayout(): void {
 		"wallpaper-mode-panel",
 		"wallpaper-mode-switch",
 	]);
-	setClickOutsideToClose("theme-mode-panel", [
-		"theme-mode-panel",
-		"scheme-switch",
-	]);
 
 	setupSwupTransitions();
 	initFullscreenWallpaper();
