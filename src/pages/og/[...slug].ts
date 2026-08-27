@@ -191,11 +191,15 @@ export async function GET({
 		iconPath = (pngFavicon ?? siteConfig.favicon[0]).src;
 	}
 
-	const hue = siteConfig.themeColor.hue;
-	const primaryColor = `hsl(${hue}, 90%, 65%)`;
-	const textColor = "hsl(0, 0%, 95%)";
-	const subtleTextColor = `hsl(${hue}, 10%, 75%)`;
-	const backgroundColor = `hsl(${hue}, 15%, 12%)`;
+	// OG 卡片颜色在构建期渲染，无法读取 CSS 变量，使用固定的 reimu 主题蓝作为固定配色。
+	// 对应 themes 变量：primary=--blue-1(亮)/--blue-0(暗)；
+	// 卡片深底 #10151f 与 --codeblock-bg(#222830) 同源风格；
+	// subtleTextColor #8fbcff 对应 --blue-3。
+	// 如需改主题一并调整此处，保持与 variables.styl 的 blue 梯度一致。
+	const primaryColor = "#2b7fff";
+	const textColor = "#f2f2f2";
+	const subtleTextColor = "#8fbcff";
+	const backgroundColor = "#10151f";
 
 	const pubDate = post.data.published.toLocaleDateString("en-US", {
 		year: "numeric",
