@@ -660,13 +660,6 @@ const viewConfigStr = JSON.stringify({
                 ui.iconLrcOn.classList.add('hidden');
                 ui.iconLrcOff.classList.remove('hidden');
             } else {
-                // Close playlist if open
-                ui.playlistDrawer.style.gridTemplateRows = '0fr';
-                ui.playlistDrawer.classList.remove('opacity-100');
-                ui.playlistDrawer.classList.add('opacity-0');
-                ui.btnDrawer.classList.remove('text-(--primary)');
-                ui.btnDrawer.classList.add('text-neutral-400');
-
                 ui.lrcDrawer.style.gridTemplateRows = '1fr';
                 ui.lrcDrawer.classList.add('opacity-100');
                 ui.lrcDrawer.classList.remove('opacity-0');
@@ -674,6 +667,8 @@ const viewConfigStr = JSON.stringify({
                 ui.btnLrc.classList.remove('text-neutral-400');
                 ui.iconLrcOn.classList.remove('hidden');
                 ui.iconLrcOff.classList.add('hidden');
+                var revealFn = window.__fireflyScrollReveal;
+                if (revealFn) revealFn(ui.lrcDrawer, ui.widget.closest('.card-base') ?? ui.widget, 300);
             }
         });
 
@@ -687,15 +682,6 @@ const viewConfigStr = JSON.stringify({
                 ui.btnDrawer.classList.remove('text-(--primary)');
                 local.vs.drawerOpen = false;
             } else {
-                // Close lyrics if open
-                ui.lrcDrawer.style.gridTemplateRows = '0fr';
-                ui.lrcDrawer.classList.remove('opacity-100');
-                ui.lrcDrawer.classList.add('opacity-0');
-                ui.btnLrc.classList.remove('text-(--primary)');
-                ui.btnLrc.classList.add('text-neutral-400');
-                ui.iconLrcOn.classList.add('hidden');
-                ui.iconLrcOff.classList.remove('hidden');
-
                 ui.playlistDrawer.style.gridTemplateRows = '1fr';
                 ui.playlistDrawer.classList.add('opacity-100');
                 ui.playlistDrawer.classList.remove('opacity-0');
@@ -703,12 +689,21 @@ const viewConfigStr = JSON.stringify({
                 ui.btnDrawer.classList.add('text-(--primary)');
                 local.vs.drawerOpen = true;
 
-                // Render playlist after drawer transition settles
+                // Render playlist after drawer transition settles, then auto-scroll
+                var revealFn = window.__fireflyScrollReveal;
+                var doReveal = revealFn
+                    ? function () {
+                          revealFn(ui.playlistDrawer, ui.widget.closest('.card-base') ?? ui.widget, 300);
+                      }
+                    : null;
                 if (local.vs.playlist.length > 0) {
                     requestAnimationFrame(function () {
                         vsSetContainerHeight();
                         vsCommitRange();
+                        if (doReveal) doReveal();
                     });
+                } else if (doReveal) {
+                    doReveal();
                 }
             }
         });
@@ -754,6 +749,16 @@ const viewConfigStr = JSON.stringify({
         ui.cover.addEventListener('error', function () {
             ui.cover.classList.add('opacity-0');
         });
+
+        // ── 播放列表默认展开（与歌词独立开合，可同时展示）─────
+        if (ui.btnDrawer && !ui.btnDrawer.classList.contains('hidden')) {
+            ui.playlistDrawer.style.gridTemplateRows = '1fr';
+            ui.playlistDrawer.classList.add('opacity-100');
+            ui.playlistDrawer.classList.remove('opacity-0');
+            ui.btnDrawer.classList.add('text-(--primary)');
+            ui.btnDrawer.classList.remove('text-neutral-400');
+            local.vs.drawerOpen = true;
+        }
 
         // ── Cleanup on DOM removal ───────────────────────────────
         var observer = new MutationObserver(function (mutations) {
@@ -803,6 +808,13 @@ const viewConfigStr = JSON.stringify({
 
     initAll();
 })();
+</script>
+
+<script>
+  import { scrollToRevealAfterExpand } from "@/utils/scroll-reveal-utils";
+  // 暴露给上方 is:inline 脚本（无法 import）使用，使歌词/播放列表展开时
+  // 与「构建信息」展开一致地自动滚动，确保展开区域可见
+  (window as any).__fireflyScrollReveal = scrollToRevealAfterExpand;
 </script>
 
 <style>
