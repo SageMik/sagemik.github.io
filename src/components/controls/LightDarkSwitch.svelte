@@ -31,8 +31,10 @@ function switchScheme(newMode: LIGHT_DARK_MODE) {
 	mode = newMode;
 	setTheme(newMode);
 	updateDisplayedMode();
-	// 选择后移出焦点，使 :focus-within 失效收起菜单（与左侧菜单项点击跳转后菜单消失的行为一致）
-	(document.activeElement as HTMLElement | null)?.blur();
+	// 桌面端移除焦点，以便切换主题移出鼠标后隐藏菜单；移动端不处理避免切换后菜单闪现
+	if (window.matchMedia("(pointer: coarse)").matches === false) {
+		(document.activeElement as HTMLElement | null)?.blur();
+	}
 }
 
 

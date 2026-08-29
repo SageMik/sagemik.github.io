@@ -128,11 +128,10 @@ html[data-has-wallpaper] #navbar[data-transparent-mode="semifull"]:not(.scrolled
 }
 
 /* ============================================
- * 桌面端 - 亮色主题 - Banner模式
- * 适用: 桌面端(≥1024px) + Banner模式 + 亮色主题
+ * 亮色主题 - Banner模式
+ * 适用: 所有设备宽度 + Banner模式 + 亮色主题
  * 遵循: transparentMode, blur 配置
  * ============================================ */
-@media (min-width: 1024px) {
 
     /* "semi" */
     html[data-has-wallpaper] #navbar[data-transparent-mode="semi"]>div {
@@ -167,53 +166,11 @@ html[data-has-wallpaper] #navbar[data-transparent-mode="semifull"]:not(.scrolled
         border-radius: 0 0 0.75rem 0.75rem !important;
         box-shadow: var(--shadow-navbar) !important;
     }
-}
 
 /* ============================================
- * 移动端 - 亮色主题 - Banner模式
- * 适用: 移动端(≤1023px) + Banner模式 + 亮色主题 + 仅首页生效
+ * 暗色主题 - Banner模式
+ * 适用: 所有设备宽度 + Banner模式 + 暗色主题
  * ============================================ */
-@media (max-width: 1023px) {
-
-    /* "semi" */
-    html[data-has-wallpaper] #navbar[data-transparent-mode="semi"][data-is-home="true"]>div {
-        --navbar-surface-blur: var(--navbar-glass-blur, 20px) !important;
-        background: color-mix(in oklch, var(--card-bg) calc(var(--opacity-55) * 100%), transparent) !important;
-        border-radius: 0 0 0.75rem 0.75rem !important;
-        box-shadow: var(--shadow-navbar) !important;
-    }
-
-    /* "full" */
-    html[data-has-wallpaper] #navbar[data-transparent-mode="full"][data-is-home="true"]>div {
-        --navbar-surface-blur: 0px !important;
-        background: transparent !important;
-        border: none !important;
-        border-radius: 0 !important;
-        box-shadow: none !important;
-    }
-
-    /* "semifull" (static) */
-    html[data-has-wallpaper] #navbar[data-transparent-mode="semifull"][data-is-home="true"]>div {
-        --navbar-surface-blur: 0px !important;
-        background: transparent !important;
-        border: none !important;
-        border-radius: 0 0 0.75rem 0.75rem !important;
-        box-shadow: none !important;
-    }
-
-    /* "semifull" (scrolled) */
-    html[data-has-wallpaper] #navbar[data-transparent-mode="semifull"][data-is-home="true"].scrolled>div {
-        --navbar-surface-blur: var(--navbar-glass-blur, 20px) !important;
-        background: color-mix(in oklch, var(--card-bg) calc(var(--opacity-55) * 100%), transparent) !important;
-        border-radius: 0 0 0.75rem 0.75rem !important;
-        box-shadow: var(--shadow-navbar) !important;
-    }
-}
-
-/* ============================================
- * 桌面端 - 暗色主题 - Banner模式
- * ============================================ */
-@media (min-width: 1024px) {
 
     /* "semi" */
     :root.dark[data-has-wallpaper] #navbar[data-transparent-mode="semi"]>div {
@@ -240,39 +197,6 @@ html[data-has-wallpaper] #navbar[data-transparent-mode="semifull"]:not(.scrolled
         background: color-mix(in oklch, var(--card-bg) calc(var(--opacity-55) * 100%), transparent) !important;
         box-shadow: var(--shadow-navbar-dark) !important;
     }
-}
-
-/* ============================================
- * 移动端 - 暗色主题 - Banner模式
- * ============================================ */
-@media (max-width: 1023px) {
-
-    /* "semi" */
-    :root.dark[data-has-wallpaper] #navbar[data-transparent-mode="semi"][data-is-home="true"]>div {
-        background: color-mix(in oklch, var(--card-bg) calc(var(--opacity-55) * 100%), transparent) !important;
-        box-shadow: var(--shadow-navbar-dark) !important;
-    }
-
-    /* "full" */
-    :root.dark[data-has-wallpaper] #navbar[data-transparent-mode="full"][data-is-home="true"]>div {
-        background: transparent !important;
-        border: none !important;
-        box-shadow: none !important;
-    }
-
-    /* "semifull" (static) */
-    :root.dark[data-has-wallpaper] #navbar[data-transparent-mode="semifull"][data-is-home="true"]>div {
-        background: transparent !important;
-        border: none !important;
-        box-shadow: none !important;
-    }
-
-    /* "semifull" (scrolled) */
-    :root.dark[data-has-wallpaper] #navbar[data-transparent-mode="semifull"][data-is-home="true"].scrolled>div {
-        background: color-mix(in oklch, var(--card-bg) calc(var(--opacity-55) * 100%), transparent) !important;
-        box-shadow: var(--shadow-navbar-dark) !important;
-    }
-}
 
 /* ============================================
  * 移动端去掉底部圆角
@@ -283,9 +207,9 @@ html[data-has-wallpaper] #navbar[data-transparent-mode="semifull"]:not(.scrolled
     }
 
     /* 覆盖 banner 模式 semi / semifull 下的圆角 */
-    html[data-has-wallpaper] #navbar[data-transparent-mode="semi"][data-is-home="true"]>div,
-    html[data-has-wallpaper] #navbar[data-transparent-mode="semifull"][data-is-home="true"]>div,
-    html[data-has-wallpaper] #navbar[data-transparent-mode="semifull"][data-is-home="true"].scrolled>div {
+    html[data-has-wallpaper] #navbar[data-transparent-mode="semi"]>div,
+    html[data-has-wallpaper] #navbar[data-transparent-mode="semifull"]>div,
+    html[data-has-wallpaper] #navbar[data-transparent-mode="semifull"].scrolled>div {
         border-radius: 0 !important;
     }
 }

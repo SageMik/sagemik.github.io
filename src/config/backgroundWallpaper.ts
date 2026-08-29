@@ -38,10 +38,10 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 	src: {
 		// 桌面背景图片（支持单张或多张随机）
 		// desktop: "assets/images/DesktopWallpaper/d1.avif",
-		desktop: "assets/images/yanfei.jpg",
+		desktop: "/assets/images/yanfei.jpg",
 		// 移动背景图片（支持单张或多张随机）
 		// mobile: "assets/images/MobileWallpaper/m1.avif",
-		mobile: "assets/images/yanfei.jpg",
+		mobile: "/assets/images/yanfei.jpg",
 		// 背景视频播放地址
 		// 支持单个视频路径（字符串）或多个视频循环（数组，参考上面壁纸配置）
 		// 支持远程视频URL，本地视频请放在 public/assets/videos/ 目录下
@@ -82,19 +82,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			linksEnable: true,
 			// 首页横幅标题下方的链接图标（可选，支持 showName 显示文字）
 			// 图标支持 Iconify 格式：fa7-brands:github、fa7-solid:envelope、mdi:rss 等
-			links: [
-				{
-					name: "GitHub",
-					icon: "fa7-brands:github",
-					url: "https://github.com/SageMik",
-					showName: true,
-				},
-				{
-					name: "RSS",
-					icon: "fa7-solid:rss",
-					url: "/rss/",
-				},
-			],
+			links: [],
 		},
 		// 壁纸轮播配置，横幅壁纸和全屏壁纸共享，仅在配置多张图片时生效
 		carousel: {
@@ -111,7 +99,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		// 图片位置
 		// 支持所有CSS object-position值，如: 'top', 'center', 'bottom', 'left top', 'right bottom', '25% 75%', '10px 20px'..
 		// 如果不知道怎么配置百分百之类的配置，推荐直接使用：'center'居中，'top'顶部居中，'bottom' 底部居中，'left'左侧居中，'right'右侧居中
-		position: "0% 20%",
+		position: "50% 20%",
 		// 文章横幅信息："description" 显示描述，"meta" 显示日期、字数和阅读时长
 		postInfo: {
 			mode: "description",

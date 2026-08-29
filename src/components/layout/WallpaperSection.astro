@@ -42,8 +42,8 @@ const { state, backgroundImages, title, bannerPostMeta } = Astro.props;
                         class="object-cover h-full w-full"
                         src={src}
                         position={backgroundWallpaper.banner?.position}
-                        width={828}
-                        widths={[640, 828]}
+                        width={1280}
+                        widths={[640, 828, 1280]}
                         sizes="100vw"
                         loading="eager"
                         quality={state.mobileQuality}
@@ -76,8 +76,8 @@ const { state, backgroundImages, title, bannerPostMeta } = Astro.props;
                         class="object-cover h-full w-full"
                         src={backgroundImages.mobile[0]}
                         position={backgroundWallpaper.banner?.position}
-                        width={828}
-                        widths={[640, 828]}
+                        width={1280}
+                        widths={[640, 828, 1280]}
                         sizes="100vw"
                         loading="eager"
                         fetchpriority="high"
@@ -118,8 +118,8 @@ const { state, backgroundImages, title, bannerPostMeta } = Astro.props;
                         class="object-cover h-full w-full"
                         src={backgroundImages.mobile[0]}
                         position={backgroundWallpaper.banner?.position}
-                        width={828}
-                        widths={[640, 828]}
+                        width={1280}
+                        widths={[640, 828, 1280]}
                         sizes="100vw"
                         loading="eager"
                         quality={state.mobileQuality}
@@ -152,8 +152,8 @@ const { state, backgroundImages, title, bannerPostMeta } = Astro.props;
                         class="object-cover h-full w-full"
                         src={backgroundImages.mobile[0]}
                         position={backgroundWallpaper.banner?.position}
-                        width={828}
-                        widths={[640, 828]}
+                        width={1280}
+                        widths={[640, 828, 1280]}
                         sizes="100vw"
                         loading="eager"
                         fetchpriority="high"
@@ -536,9 +536,9 @@ const { state, backgroundImages, title, bannerPostMeta } = Astro.props;
     <div id="banner-overlay-container" class="absolute inset-0 z-20 pointer-events-none transition-swup-fade">    <!-- Home page text overlay - 始终渲染以便切换模式时控制显示 -->
     <BannerHomeTextOverlay showHomeText={state.showHomeText} initialRandomSubtitle={state.initialRandomSubtitle} />
 
-    <!-- Non-home non-post page title overlay (desktop only) -->
+    <!-- Non-home non-post page title overlay -->
     {state.showBannerPageTitle && (
-        <div class="banner-page-title-overlay absolute inset-0 z-20 hidden lg:flex items-center justify-center pointer-events-none">
+        <div class="banner-page-title-overlay absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
             <div class="w-4/5 lg:w-3/4 text-center mb-0">
                 <div class="banner-page-title font-bold text-white leading-tight inline-flex items-center justify-center gap-3">
                     {/* <Icon name="material-symbols:bookmark-rounded" class="banner-page-title-icon" /> */}
@@ -548,7 +548,7 @@ const { state, backgroundImages, title, bannerPostMeta } = Astro.props;
         </div>
     )}
 
-    <!-- Non-home post banner meta overlay (desktop only) -->
+    <!-- Non-home post banner meta overlay -->
     <BannerPostMetaOverlay showBannerPostMeta={state.showBannerPostMeta} bannerPostInfoMode={state.bannerPostInfoMode} bannerDescriptionWidth={state.bannerDescriptionWidth} bannerPostMeta={bannerPostMeta} />
 
     </div>

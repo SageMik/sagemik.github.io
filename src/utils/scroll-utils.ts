@@ -10,7 +10,7 @@ const backToTopBtn = document.getElementById("back-to-top-btn");
 const toc = document.getElementById("toc-wrapper");
 const navbar = document.getElementById("navbar-wrapper");
 
-// 记录上一次滚动位置，用于判断滚动方向（reimu 式方向化隐藏）
+// 记录上一次滚动位置，用于判断滚动方向（方向化隐藏）
 let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
 /** 优化的滚动处理函数（从 Layout.astro 迁出；visit:end 切页后也会调用） */
@@ -57,7 +57,7 @@ export function scrollFunction(): void {
 		operations.push(() => {
 			const scrollTop =
 				window.pageYOffset || document.documentElement.scrollTop;
-			// reimu 式方向化隐藏：向下滚动时隐藏导航栏，向上滚动时显示
+			// 方向化隐藏：向下滚动时隐藏导航栏，向上滚动时显示
 			if (scrollTop > lastScrollTop) {
 				navbar.classList.add("navbar-hidden");
 			} else if (scrollTop < lastScrollTop) {
