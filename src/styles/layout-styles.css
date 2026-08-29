@@ -13,6 +13,12 @@ html[data-banner-title-enabled="false"] #wallpaper-wrapper .banner-home-text-ove
     display: none !important;
 }
 
+/* 统一头图处理，避免图中人像被遮挡 */
+html[data-wallpaper-mode="banner"] #banner-images-container img {
+    height: 100% !important;
+    object-position: center 40% !important;
+}
+
 /* 页面切换期间隐藏首页横幅文案，避免与文章元信息层重叠闪现 */
 html.is-page-transitioning .banner-home-text-overlay {
     display: none !important;

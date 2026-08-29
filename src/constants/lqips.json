@@ -2,5 +2,5 @@
   "src:assets/images/logo/firefly-light.png": "000000000000000000",
   "src:assets/images/logo/firefly-dark.png": "ffffffffffffffffff",
   "src:assets/images/yomiya.jpg": "dda5a2da9490d6a69c",
-  "src:assets/images/yanfei.jpg": "485a85496691464e6d"
+  "public:assets/images/yanfei.jpg": "485a85496691464e6d"
 }

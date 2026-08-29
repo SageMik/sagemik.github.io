@@ -13,12 +13,6 @@
   html[data-wallpaper-mode="banner"] .content-panel {
     --content-top: calc(var(--banner-height-home) - 3.5rem); /* = 65vh - 3.5rem */
   }
-  /* banner 移动端非首页：横幅隐藏，内容从导航栏下方开始 */
-  @media (max-width: 1023px) {
-    html[data-wallpaper-mode="banner"] body:not(.is-home) .content-panel {
-      --content-top: 5.5rem;
-    }
-  }
   /* overlay / none / fullscreen 非首页：内容从导航栏下方开始 */
   html[data-wallpaper-mode="overlay"] .content-panel,
   html[data-wallpaper-mode="none"] .content-panel,
@@ -40,29 +34,12 @@
   }
   @media (max-width: 1023px) {
     html[data-wallpaper-mode="banner"] body:not(.is-home) #wallpaper-wrapper {
-      display: none !important;
+      /* 已在移动端非首页显示头图 */
     }
   }
   /* none 模式隐藏壁纸 */
   html[data-wallpaper-mode="none"] #wallpaper-wrapper {
     display: none !important;
-  }
-
-  /* banner 桌面端非首页：整块横幅用 transform 上移 20vh（合成层动画，平滑、不触发壁纸每帧重排）。
-     与内容区 FLIP（同为 transform）同步；不用 height 过渡，避免大图重布局掉帧 */
-  @media (min-width: 1024px) {
-    html[data-wallpaper-mode="banner"] body:not(.is-home) #wallpaper-wrapper {
-      transform: translateY(calc(var(--banner-height-non-home) - var(--banner-height-home)));
-    }
-    html[data-wallpaper-mode="banner"] body:not(.is-home) .content-panel {
-      --content-top: calc(var(--banner-height-non-home) - 3.5rem);
-    }
-    /* 非首页标题反向平移：抵消 wrapper 一半的 -20vh，使标题落在缩短后 45vh 横幅的正中 */
-    html[data-wallpaper-mode="banner"] body:not(.is-home) #banner-overlay-container .banner-home-text-overlay,
-    html[data-wallpaper-mode="banner"] body:not(.is-home) #banner-overlay-container .banner-page-title-overlay,
-    html[data-wallpaper-mode="banner"] body:not(.is-home) #banner-overlay-container .banner-post-meta-overlay {
-      transform: translateY(calc((var(--banner-height-home) - var(--banner-height-non-home)) / 2));
-    }
   }
 
   /* banner 模式 top-row 占位高度 */

@@ -191,7 +191,7 @@ export async function GET({
 		iconPath = (pngFavicon ?? siteConfig.favicon[0]).src;
 	}
 
-	// OG 卡片颜色在构建期渲染，无法读取 CSS 变量，使用固定的 reimu 主题蓝作为固定配色。
+	// OG 卡片颜色在构建期渲染，无法读取 CSS 变量，使用固定的主题蓝作为固定配色。
 	// 对应 themes 变量：primary=--blue-1(亮)/--blue-0(暗)；
 	// 卡片深底 #10151f 与 --codeblock-bg(#222830) 同源风格；
 	// subtleTextColor #8fbcff 对应 --blue-3。
