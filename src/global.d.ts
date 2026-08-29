@@ -71,8 +71,10 @@ declare global {
 		};
 		/** 樱花特效管理器,Worker 模式与主线程回退模式均实现该接口 */
 		sakuraManager?: SakuraManagerLike;
-		/** 樱花特效初始化守卫,确保只初始化一次(Swup 切页重跑脚本时复用) */
-		sakuraInitialized?: boolean;
+        /** 樱花特效初始化守卫,确保只初始化一次(Swup 切页重跑脚本时复用) */
+        sakuraInitialized?: boolean;
+        /** 点击烟花特效初始化守卫,确保只初始化一次(Swup 切页重跑脚本时复用) */
+        fireworkInitialized?: boolean;
 		/** 水波纹特效管理器(主线程 Canvas 2D 实现) */
 		wavesManager?: WavesManagerLike;
 		/** 水波纹特效初始化守卫,确保只初始化一次(Swup 切页重跑脚本时复用) */
