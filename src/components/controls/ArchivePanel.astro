@@ -287,8 +287,7 @@ const foldOnFilter = collapseAllButFirst;
       const countLabelEl = header.querySelector("#archive-filter-count-label");
 
       const fmtValues = (f) => {
-        const prefix = f.isTag ? "#" : "";
-        return f.values.map((v) => `${prefix}${v}`).join(" / ");
+        return f.values.join(" / ");
       };
 
       if (linkEl) {
@@ -326,7 +325,7 @@ const foldOnFilter = collapseAllButFirst;
       } else if (uncategorized) {
         newTitle = i18nStrings.uncategorized;
       } else if (tags.length > 0) {
-        newTitle = tags.map((t) => `#${t}`).join(" / ");
+        newTitle = tags.map((t) => `${t}`).join(" / ");
       }
       // 直接设置（自定义元素在解析阶段升级、首帧前执行），避免默认标题闪烁
       if (newTitle && bannerTitle.textContent !== newTitle) {

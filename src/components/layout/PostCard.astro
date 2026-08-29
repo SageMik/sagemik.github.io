@@ -192,12 +192,12 @@ const minutes = remarkPluginFrontmatter.minutes;
                 : "tag-item px-2.5 py-1",
             ]}
           >
-            #{tag.trim()}
+            {tag.trim()}
           </a>
         ))}
         {hiddenTagCount > 0 && (
           <span
-            title={hiddenTags.map((tag) => `#${tag.trim()}`).join(" ")}
+            title={hiddenTags.map((tag) => `${tag.trim()}`).join(" ")}
             class:list={[
               "text-xs font-medium",
               bottomTagsAsText
