@@ -272,6 +272,7 @@ const detailItems: {
 </style>
 
 <script>
+  import { scrollToRevealAfterExpand } from "@/utils/scroll-reveal-utils";
   class SiteInfoCollapse extends HTMLElement {
     constructor() {
       super();
@@ -298,52 +299,17 @@ const detailItems: {
         textEl.textContent = expanded ? collapseText : expandText;
         iconEl?.classList.toggle("rotate-180", expanded);
         // 展开时让页面跟随滚动，露出完整的构建信息（时长与 CSS 的 0.6s 保持一致）
-        if (expanded) this.scrollToReveal(detail, btn, 600);
+        if (expanded)
+          scrollToRevealAfterExpand(
+            detail,
+            (this.closest(".card-base") as HTMLElement | null) ??
+              btn.parentElement ??
+              document.body,
+            600,
+          );
       });
     }
 
-    // 展开动画期间同步滚动页面：先算出展开后卡片底部的位置，
-    // 若会超出视口底部，则在动画时长内滚动，终点为卡片底部 + 与下一卡片的间距。
-    scrollToReveal(detailEl: HTMLElement, btnEl: HTMLElement, duration: number) {
-      const scroller = (document.scrollingElement ||
-        document.documentElement) as HTMLElement;
-      const viewportH = window.innerHeight;
-
-      const card = this.closest(".card-base") ?? btnEl.parentElement;
-      // 卡片间的间距 = 卡片容器的 row-gap（flex gap-4 = 16px），兜底 20
-      const gap =
-        parseFloat(getComputedStyle(card?.parentElement ?? btnEl, "").rowGap) ||
-        20;
-      // grid 子元素即使被 overflow 裁剪，scrollHeight 也是完整内容高度，
-      // 用它估算展开后内容高度（折叠时折叠区约为 0）
-      const child = detailEl.firstElementChild as HTMLElement | null;
-      const growth = child ? child.scrollHeight : detailEl.scrollHeight;
-
-      // 展开完成后卡片底部相对视口的位置 = 当前底部 + 展开增量
-      const cardBottom =
-        (card?.getBoundingClientRect().bottom ??
-          btnEl.getBoundingClientRect().bottom) + growth;
-      // 卡片底部 + 间距后若未超出视口底部，无需滚动
-      if (cardBottom + gap <= viewportH) return;
-
-      const from = scroller.scrollTop;
-      const to = from + cardBottom + gap - viewportH;
-      const start = performance.now();
-
-      // 页面 html 开启了 scroll-behavior: smooth，若直接逐帧赋值 scrollTop，
-      // 浏览器会把每次赋值当作一次平滑滚动，导致滚动滞后、无法与动画同步到位。
-      // 因此动画期间临时改为 auto，结束后恢复。
-      const prevBehavior = scroller.style.scrollBehavior;
-      scroller.style.scrollBehavior = "auto";
-
-      requestAnimationFrame(function tick(now) {
-        const p = Math.min((now - start) / duration, 1);
-        // 与 CSS 同频到位：简单 easeOutCubic 即可，终点在 duration 内同时到达
-        scroller.scrollTop = from + (to - from) * (1 - Math.pow(1 - p, 3));
-        if (p < 1) requestAnimationFrame(tick);
-        else scroller.style.scrollBehavior = prevBehavior;
-      });
-    }
   }
 
   if (!customElements.get("site-info-collapse")) {

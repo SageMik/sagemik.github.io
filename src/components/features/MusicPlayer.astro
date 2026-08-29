@@ -12,6 +12,8 @@ interface Props {
 const { class: className, style, id } = Astro.props;
 
 const config = musicPlayerConfig;
+const lyricsOpenByDefault = false;
+const playlistOpenByDefault = true;
 
 const widgetId =
 	id || `music-widget-${Math.random().toString(36).substring(2, 9)}`;
@@ -38,9 +40,13 @@ const widgetId =
                 </h3>
             </div>
             <!-- Top Right: Lyric Toggle -->
-            <button class={`btn-lrc-toggle hover:text-(--primary) transition-all duration-300 p-0.5 pr-2 transform active:scale-95 text-neutral-400 shrink-0 ${!config.showLyrics ? 'hidden' : ''}`} title={i18n(I18nKey.musicLyrics)} aria-label={i18n(I18nKey.musicLyrics)}>
-                <Icon name="material-symbols:subtitles-off-outline-rounded" class="icon-lrc-off text-xl" aria-hidden="true" />
-                <Icon name="material-symbols:subtitles-outline-rounded" class="icon-lrc-on text-xl hidden" aria-hidden="true" />
+            <button class:list={[
+                "btn-lrc-toggle hover:text-(--primary) transition-all duration-300 p-0.5 pr-2 transform active:scale-95 shrink-0",
+                !config.showLyrics ? "hidden" : "",
+                lyricsOpenByDefault ? "text-(--primary)" : "text-neutral-400",
+            ]} title={i18n(I18nKey.musicLyrics)} aria-label={i18n(I18nKey.musicLyrics)}>
+                <Icon name="material-symbols:subtitles-off-outline-rounded" class:list={["icon-lrc-off text-xl", lyricsOpenByDefault ? "hidden" : ""]} aria-hidden="true" />
+                <Icon name="material-symbols:subtitles-outline-rounded" class:list={["icon-lrc-on text-xl", lyricsOpenByDefault ? "" : "hidden"]} aria-hidden="true" />
             </button>
         </div>
 
@@ -110,13 +116,16 @@ const widgetId =
     </button>
 
     <!-- Playlist Toggle Arrow -->
-    <button class="btn-drawer-toggle text-neutral-400 hover:text-(--primary) transition-all duration-300 p-2 transform active:scale-95" title={i18n(I18nKey.musicPlaylist)} aria-label={i18n(I18nKey.musicPlaylist)}>
+    <button class:list={[
+        "btn-drawer-toggle hover:text-(--primary) transition-all duration-300 p-2 transform active:scale-95",
+        playlistOpenByDefault ? "text-(--primary)" : "text-neutral-400",
+    ]} title={i18n(I18nKey.musicPlaylist)} aria-label={i18n(I18nKey.musicPlaylist)}>
         <Icon name="mdi:playlist-music" class="text-xl" aria-hidden="true" />
     </button>
 </div>
 
 <!-- Lyrics Drawer -->
-<div class="lrc-drawer grid transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] grid-rows-[0fr] opacity-0">
+<div class:list={["lrc-drawer grid transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]", lyricsOpenByDefault ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"]}>
     <div class="overflow-hidden min-h-0">
         <div class="mt-2 pt-2 border-t border-neutral-100 dark:border-white/5 mx-1">
             <div class="lrc-container h-48 overflow-y-auto custom-scrollbar flex flex-col items-center gap-2 p-4 py-24 text-center relative scroll-smooth" role="listbox" aria-label={i18n(I18nKey.musicLyrics)}>
@@ -127,7 +136,7 @@ const widgetId =
 </div>
 
 <!-- Playlist Drawer (Accordion) -->
-<div class="playlist-drawer grid transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] grid-rows-[0fr] opacity-0">
+<div class:list={["playlist-drawer grid transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]", playlistOpenByDefault ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"]}>
     <div class="overflow-hidden min-h-0">
             <div class="mt-2 pt-2 border-t border-neutral-100 dark:border-white/5 mx-1">
             <div class="playlist-container max-h-48 overflow-y-auto custom-scrollbar pr-1 pb-1 relative" role="listbox" aria-label={i18n(I18nKey.musicPlaylist)}>
