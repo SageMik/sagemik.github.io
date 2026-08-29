@@ -1,0 +1,50 @@
+---
+// 鼠标点击烟花特效
+---
+
+<script>
+	// 守卫确保 Swup 切页重跑模块化脚本时只初始化一次
+	(function setupFirework() {
+		if (window.fireworkInitialized) {
+			return;
+		}
+		window.fireworkInitialized = true;
+
+		import("mouse-firework")
+			.then((mod) => {
+				mod.default({
+					excludeElements: ["a", "button"],
+					particles: [
+						{
+							shape: "circle",
+							move: ["emit"],
+							easing: "easeOutExpo",
+							colors: ["var(--blue-0)", "var(--blue-1)", "var(--blue-2)", "var(--blue-3)", "var(--blue-4)"],
+							number: 20,
+							duration: [1200, 1800],
+							shapeOptions: {
+								radius: [16, 32],
+								alpha: [0.3, 0.5],
+							},
+						},
+						{
+							shape: "circle",
+							move: ["diffuse"],
+							easing: "easeOutExpo",
+							colors: ["var(--blue-0)"],
+							number: 1,
+							duration: [1200, 1800],
+							shapeOptions: {
+								radius: 20,
+								alpha: [0.2, 0.5],
+								lineWidth: 6,
+							},
+						},
+					],
+				});
+			})
+			.catch((e) => {
+				console.warn("[Firework] failed to load mouse-firework:", e);
+			});
+	})();
+</script>
