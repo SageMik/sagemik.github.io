@@ -51,15 +51,18 @@ const licenseIcon = licenseName
 <div
   class={`relative transition overflow-hidden bg-(--license-block-bg) py-5 px-6 ${className}`}
 >
-  <div class="transition font-bold text-black/75 dark:text-white/75">
+  <div class="transition font-bold text-black/75 dark:text-white/75 mb-1">
     {title}
   </div>
-  <a href={postUrl} class="link text-(--primary) break-all">
+  <a
+    href={postUrl}
+    class="link text-(--primary) break-all inline-block max-w-full mb-1"
+  >
     {postUrl}
   </a>
-  <div class="flex flex-col sm:flex-row gap-3 sm:gap-6 mt-2">
+  <div class="flex flex-col sm:flex-row gap-3 sm:gap-6">
     <div>
-      <div class="transition text-black/30 dark:text-white/30 text-sm">
+      <div class="transition text-black/30 dark:text-white/30 text-sm mb-1">
         {i18n(I18nKey.author)}
       </div>
       <div class="transition text-black/75 dark:text-white/75 line-clamp-2">
@@ -67,7 +70,7 @@ const licenseIcon = licenseName
       </div>
     </div>
     <div>
-      <div class="transition text-black/30 dark:text-white/30 text-sm">
+      <div class="transition text-black/30 dark:text-white/30 text-sm mb-1">
         {i18n(I18nKey.publishedAt)}
       </div>
       <div class="transition text-black/75 dark:text-white/75 line-clamp-2">
@@ -75,7 +78,7 @@ const licenseIcon = licenseName
       </div>
     </div>
     <div>
-      <div class="transition text-black/30 dark:text-white/30 text-sm">
+      <div class="transition text-black/30 dark:text-white/30 text-sm mb-1">
         {i18n(I18nKey.license)}
       </div>
       <a
