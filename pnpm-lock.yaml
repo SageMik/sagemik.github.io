@@ -135,8 +135,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       mouse-firework:
-        specifier: 0.3.0-beta.1
-        version: 0.3.0-beta.1
+        specifier: 0.3.0
+        version: 0.3.0
       pagefind:
         specifier: ^1.5.2
         version: 1.5.2
@@ -3641,7 +3641,7 @@ packages:
 
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
-    deprecated: Glob versions prior to v9 are no longer supported
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   globalthis@1.0.4:
     resolution: {integrity: sha512-DpLKbNU4WylpxJykQujfCcwYWiV/Jhm50Goo0wrVILAv5jOr9d+H+UR3PhSCD2rCCEIg0uc+G+muBTwD54JhDQ==}
@@ -4538,8 +4538,8 @@ packages:
   morphdom@2.7.8:
     resolution: {integrity: sha512-D/fR4xgGUyVRbdMGU6Nejea1RFzYxYtyurG4Fbv2Fi/daKlWKuXGLOdXtl+3eIwL110cI2hz1ZojGICjjFLgTg==}
 
-  mouse-firework@0.3.0-beta.1:
-    resolution: {integrity: sha512-XqoXZK1sKbJRjU93Si3xfZQWTUbnLIKUj7Jq9ZHDPkQc4B9tniETpR60NvF6AskzVdCTYFbQZ+kKjW+taqXLhw==}
+  mouse-firework@0.3.0:
+    resolution: {integrity: sha512-jlXC4m1QXDceFRKrTkRc84SmJANITEW2c8WeacKmSgIA5rJ1mz6tPZW2Kildd8AdiPsWdpnLIUcpiN1P6dIimg==}
 
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
@@ -11147,7 +11147,7 @@ snapshots:
 
   morphdom@2.7.8: {}
 
-  mouse-firework@0.3.0-beta.1: {}
+  mouse-firework@0.3.0: {}
 
   mri@1.2.0: {}
 
