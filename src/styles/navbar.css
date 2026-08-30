@@ -79,8 +79,12 @@
  * 保证覆盖在头图上时文字清晰可辨。
  * 注：仅作用于 #navbar，不影响页面内其他 .btn-plain 按钮
  * ============================================ */
-#navbar .btn-plain:not(.dropdown-item),
-#navbar .main-nav-link {
+/* 仅在导航栏底色透明时（头图区域 / full 模式）用白色文字，覆盖头图清晰可辨；
+   semifull 滚出头图后进入 scrolled 半透明态，底色为浅色毛玻璃，改回默认深色避免浅底白字 */
+html[data-has-wallpaper] #navbar[data-transparent-mode="full"] .btn-plain:not(.dropdown-item),
+html[data-has-wallpaper] #navbar[data-transparent-mode="semifull"]:not(.scrolled) .btn-plain:not(.dropdown-item),
+html[data-has-wallpaper] #navbar[data-transparent-mode="full"] .main-nav-link,
+html[data-has-wallpaper] #navbar[data-transparent-mode="semifull"]:not(.scrolled) .main-nav-link {
     color: #fff;
     opacity: 1;
     &:hover,

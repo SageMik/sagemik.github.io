@@ -104,7 +104,7 @@ export const siteConfig: SiteConfig = {
 		// 导航菜单对齐方式，left：左对齐，center：居中
 		menuAlign: "left",
 		// 导航栏是否固定在顶部并始终可见
-		stickyNavbar: false,
+		stickyNavbar: true,
 	},
 
 	// 站点开始日期，用于统计运行天数
