@@ -287,6 +287,24 @@ function initSemifullScrollDetection() {
 
     let ticking = false;
 
+    // 头图区域结束位置（文档绝对坐标）。波浪会提前裁切头图，故优先以波浪顶部为准，
+    // 其次正文顶部、头图底部；三者都不存在（无头图页面）时返回 0，导航栏直接半透明态
+    function getHeroBottom(): number {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const docTop = (el: HTMLElement) => el.getBoundingClientRect().top + scrollTop;
+
+        const waves = document.getElementById('header-waves');
+        if (waves) return docTop(waves);
+
+        const mainGrid = document.getElementById('main-grid');
+        if (mainGrid) return docTop(mainGrid);
+
+        const banner = document.getElementById('banner-images-container');
+        if (banner) return banner.getBoundingClientRect().bottom + scrollTop;
+
+        return 0;
+    }
+
     function updateNavbarState() {
         if (document.documentElement.classList.contains('is-page-transitioning')) {
             // 全屏壁纸模式：切换期间保持当前 scrolled 状态，避免点击瞬间导航栏背景突然消失
@@ -302,9 +320,8 @@ function initSemifullScrollDetection() {
         }
 
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const threshold = 50; // 滚动阈值，可以根据需要调整
-        // 使用批量DOM操作优化性能
-        if (scrollTop > threshold) {
+        // 头图区域内保持透明，滚出头图区域后切换为半透明
+        if (scrollTop > getHeroBottom()) {
             navbar!.classList.add('scrolled');
         } else {
             navbar!.classList.remove('scrolled');
