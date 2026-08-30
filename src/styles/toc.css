@@ -66,9 +66,8 @@
 }
 
 .toc-label {
+	overflow-wrap: anywhere; /* 允许目录换行 */
 	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
 	min-width: 0;
 	flex: 1;
 	max-width: calc(100% - 2.4rem);
@@ -107,13 +106,13 @@
 	width: 0.48rem;
 	height: 0.48rem;
 	border-radius: 999px;
-	background: color-mix(in oklab, var(--primary) 26%, var(--line-color));
+	background: var(--blue-4);
 }
 
 .toc-badge-dot-sm {
 	width: 0.34rem;
 	height: 0.34rem;
-	background: color-mix(in oklab, var(--primary) 16%, var(--line-color));
+	background: var(--blue-4);
 }
 
 .toc-item.visible .toc-label {
@@ -131,7 +130,7 @@
 	position: absolute;
 	left: 0;
 	right: 0;
-	background: color-mix(in oklab, var(--toc-indicator-bg), transparent);
+	background: color-mix(in oklab, var(--toc-indicator-bg) 100%, transparent);
 	border-radius: 0.875rem;
 	transition: top 0.18s ease, height 0.18s ease, opacity 0.14s ease;
 	box-shadow: 0 6px 18px -14px color-mix(in oklab, var(--primary) 55%, transparent);

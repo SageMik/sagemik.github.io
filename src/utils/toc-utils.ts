@@ -152,6 +152,9 @@ export class TOCManager {
 		const visibleHeadingIds: string[] = [];
 
 		headings.forEach((heading) => {
+			// 跳过已隐藏的正文一级标题
+			const depth = Number.parseInt(heading.tagName.charAt(1), 10);
+			if (depth < 2) return;
 			if (heading.id) {
 				const rect = heading.getBoundingClientRect();
 				const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
@@ -168,6 +171,8 @@ export class TOCManager {
 			let minDistance = Number.POSITIVE_INFINITY;
 
 			headings.forEach((heading) => {
+				const depth = Number.parseInt(heading.tagName.charAt(1), 10);
+				if (depth < 2) return;
 				if (heading.id) {
 					const rect = heading.getBoundingClientRect();
 					const distance = Math.abs(rect.top);
