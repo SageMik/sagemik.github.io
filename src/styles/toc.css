@@ -118,6 +118,7 @@
 .toc-item.visible .toc-label {
 	color: color-mix(in oklab, var(--content-meta) 58%, var(--primary));
 	opacity: 1;
+	font-weight: 600;
 }
 
 .toc-item.visible .toc-badge-dot,
