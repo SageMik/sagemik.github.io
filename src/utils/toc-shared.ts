@@ -38,19 +38,23 @@ export function computeTocItems(
 ): TocItem[] {
 	if (!headings || headings.length === 0) return [];
 
+	// 正文一级标题已隐藏，层级上调
+	const filtered = headings.filter((h) => h.depth >= 2);
+	if (filtered.length === 0) return [];
+
 	// 计算最小深度
 	let minDepth = 10;
-	for (const h of headings) {
+	for (const h of filtered) {
 		minDepth = Math.min(minDepth, h.depth);
 	}
 
 	// 过滤：depth < minDepth + maxLevel
-	const filtered = headings.filter((h) => h.depth < minDepth + opts.maxLevel);
+	const levelFiltered = filtered.filter((h) => h.depth < minDepth + opts.maxLevel);
 
 	const items: TocItem[] = [];
 	let indexCount = 1;
 
-	for (const h of filtered) {
+	for (const h of levelFiltered) {
 		// 跳过没有锚点的标题
 		if (!h.slug) continue;
 

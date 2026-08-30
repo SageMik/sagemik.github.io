@@ -11,6 +11,8 @@
 
   h1 {
     @apply text-3xl;
+    /* 隐藏正文一级标题 */
+    display: none;
   }
 
   h1,
