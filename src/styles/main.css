@@ -24,6 +24,11 @@
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
+:root {
+  --hover-transition: background-color 200ms ease, color 200ms ease,
+    outline-color 200ms ease, opacity 200ms ease;
+}
+
 /* 自定义工具类 - Tailwind v4 使用 @utility 定义 */
 @utility expand-animation {
   position: relative;
@@ -47,6 +52,35 @@
   }
   &:active {
     background: none;
+  }
+}
+
+/* 浅蓝背景按钮鼠标悬停样式 */
+@utility btn-regular-hover {
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+  transition: var(--hover-transition);
+
+  &:hover {
+    background-color: var(--card-bg);
+    color: var(--blue-1);
+    outline-color: var(--blue-1);
+  }
+
+  &:active {
+    background-color: var(--blue-4);
+    color: #0d47a1;
+  }
+
+  :where(.dark, .dark *) & {
+    &:hover {
+      background-color: var(--btn-regular-bg-hover);
+      color: rgba(255, 255, 255, 0.75);
+      outline-color: transparent;
+    }
+    &:active {
+      background-color: var(--btn-regular-bg-active);
+    }
   }
 }
 

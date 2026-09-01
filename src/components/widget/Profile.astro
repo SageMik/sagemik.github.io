@@ -48,8 +48,8 @@ const className = Astro.props.class;
                     {
                     const showName = item.showName;
                     const className = showName 
-                        ? "btn-regular rounded-lg h-10 gap-2 px-3 font-bold active:scale-95" 
-                        : "btn-regular rounded-lg h-10 w-10 active:scale-90";
+                        ? "btn-regular btn-regular-hover rounded-lg h-10 gap-2 px-3 font-bold active:scale-95"
+                        : "btn-regular btn-regular-hover rounded-lg h-10 w-10 active:scale-90";
 
                     if (item.url.startsWith("mailto:")) {
                         const encodedEmail = encodeMailto(item.url);
@@ -70,13 +70,13 @@ const className = Astro.props.class;
                 if (item.url.startsWith("mailto:")) {
                         const encodedEmail = encodeMailto(item.url);
                         return <a rel="me" aria-label={item.name} href="#" data-encoded-email={encodedEmail} onclick={MAILTO_ONCLICK_SCRIPT},
-                                    class="btn-regular rounded-lg h-10 gap-2 px-3 font-bold active:scale-95">
+                                    class="btn-regular btn-regular-hover rounded-lg h-10 gap-2 px-3 font-bold active:scale-95">
                             <Icon name={item.icon} class="text-[1.5rem]"></Icon>
                             {item.name}
                         </a>
                     } else {
                         return <a rel="me" aria-label={item.name} href={item.url} target="_blank"
-                                            class="btn-regular rounded-lg h-10 gap-2 px-3 font-bold active:scale-95">
+                                            class="btn-regular btn-regular-hover rounded-lg h-10 gap-2 px-3 font-bold active:scale-95">
                                 <Icon name={item.icon} class="text-[1.5rem]"></Icon>
                                 {item.name}
                             </a>
