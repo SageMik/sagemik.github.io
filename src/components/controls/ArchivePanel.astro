@@ -35,10 +35,6 @@ function formatDate(date: Date) {
 	return `${month}-${day}`;
 }
 
-function formatTag(tagList: string[]) {
-	return tagList.map((t) => `#${t}`).join(" ");
-}
-
 // 传给客户端脚本的 i18n 文案与配置
 const i18nStrings = {
 	categories: i18n(I18nKey.categories),
@@ -106,18 +102,18 @@ const foldOnFilter = collapseAllButFirst;
             <a
               href={getPostUrlBySlug(post.id)}
               aria-label={post.data.title}
-              class="archive-post group btn-plain block! h-10 w-full rounded-lg hover:text-[initial]"
+              class="archive-post group btn-plain block! w-full rounded-lg py-2 hover:text-[initial]"
               data-tags={JSON.stringify(post.data.tags || [])}
               data-category={post.data.category || ""}
             >
-              <div class="flex flex-row justify-start items-center h-full">
+              <div class="flex flex-row justify-start items-center">
                 {/* date */}
                 <div class="w-[15%] md:w-[10%] transition text-sm text-right text-50">
                   {formatDate(post.data.published)}
                 </div>
 
                 {/* dot and line */}
-                <div class="w-[15%] md:w-[10%] relative dash-line h-full flex items-center">
+                <div class="w-[15%] md:w-[10%] relative dash-line self-stretch flex items-center">
                   <div class="transition-all mx-auto w-1 h-1 rounded-sm group-hover:h-5
                               bg-[var(--blue-2)] group-hover:bg-(--primary)
                               outline-4 z-50 outline-(--card-bg)
@@ -126,9 +122,9 @@ const foldOnFilter = collapseAllButFirst;
                 </div>
 
                 {/* post title */}
-                <div class="w-[70%] md:max-w-[65%] md:w-[65%] text-left font-bold
+                <div class="w-[70%] md:w-[80%] text-left font-bold
                             group-hover:translate-x-1 transition-all group-hover:text-(--primary)
-                            text-75 pr-8 whitespace-nowrap text-ellipsis overflow-hidden flex items-center gap-2">
+                            text-75 pr-8 flex items-center gap-2">
                   {post.data.category && (
                     <span class="shrink-0 inline-block text-xs font-medium px-1.5 py-0.5 rounded-sm
                                  bg-[var(--blue-5)] dark:bg-[#262c38]
@@ -137,13 +133,7 @@ const foldOnFilter = collapseAllButFirst;
                       {post.data.category}
                     </span>
                   )}
-                  <span class="truncate">{post.data.title}</span>
-                </div>
-
-                {/* tag list */}
-                <div class="hidden md:block md:w-[15%] text-left text-sm transition
-                            whitespace-nowrap text-ellipsis overflow-hidden text-30">
-                  {formatTag(post.data.tags || [])}
+                  <span class="min-w-0">{post.data.title}</span>
                 </div>
               </div>
             </a>
@@ -160,6 +150,9 @@ const foldOnFilter = collapseAllButFirst;
   }
   .archive-arrow {
     display: inline-flex;
+  }
+  .archive-post:not(:has(~ .archive-post:not([hidden]))) .dash-line::before {
+    height: calc(50% + 1.5rem);
   }
 </style>
 

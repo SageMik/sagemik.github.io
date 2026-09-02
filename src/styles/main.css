@@ -551,12 +551,12 @@ html {
     content: "";
     position: absolute;
     width: 10%;
-    height: 100%;
+    height: calc(100% + 1.5rem);
+    top: -1.5rem;
     left: calc(50% - 1px);
     border-left: 2px dashed var(--line-color);
     pointer-events: none;
     transition: all 0.3s;
-    transform: translateY(-50%);
 }
 
 
