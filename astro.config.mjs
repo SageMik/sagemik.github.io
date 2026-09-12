@@ -203,12 +203,12 @@ export default defineConfig({
 				wrap: false,
 				overridesByLang: {
 					shellsession: {
-						showLineNumbers: false,
+						showLineNumbers: true,
 					},
 				},
 			},
 			styleOverrides: {
-				borderRadius: "0.75rem",
+				borderRadius: "10px",
 				codeFontSize: "0.875rem",
 				codeFontFamily:
 					"var(--font-code, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace)",

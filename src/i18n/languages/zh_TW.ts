@@ -474,6 +474,13 @@ export const zh_TW: Translation = {
 	[Key.codeCollapsibleExpanded]: "代碼區塊已展開",
 	[Key.codeCollapsibleCollapsed]: "代碼區塊已折疊",
 
+	// 程式碼區塊頭部按鈕 tooltip
+	[Key.codeCopy]: "複製程式碼",
+	[Key.codeWrapEnable]: "開啟換行",
+	[Key.codeWrapDisable]: "關閉換行",
+	[Key.codeExpand]: "展開",
+	[Key.codeCollapse]: "收起",
+
 	// 相簿頁面
 	[Key.gallery]: "相簿",
 	[Key.galleryDescription]: "記錄生活中的美好瞬間",

@@ -479,6 +479,13 @@ export const ko: Translation = {
 	[Key.codeCollapsibleExpanded]: "코드 블록 펼쳐짐",
 	[Key.codeCollapsibleCollapsed]: "코드 블록 접힘",
 
+	// 코드 블록 헤더 버튼 툴팁
+	[Key.codeCopy]: "코드 복사",
+	[Key.codeWrapEnable]: "자동 줄바꿈 사용",
+	[Key.codeWrapDisable]: "자동 줄바꿈 해제",
+	[Key.codeExpand]: "펼치기",
+	[Key.codeCollapse]: "접기",
+
 	// Gallery Page
 	[Key.gallery]: "갤러리",
 	[Key.galleryDescription]: "삶의 아름다운 순간을 담다",

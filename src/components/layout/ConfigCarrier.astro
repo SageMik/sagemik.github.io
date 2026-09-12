@@ -1,5 +1,17 @@
 ---
 import { backgroundWallpaper, siteConfig } from "@/config";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
+
+// 代码块头部按钮 tooltip 文案
+const codeTexts = {
+	copy: i18n(I18nKey.codeCopy),
+	copied: i18n(I18nKey.copied),
+	wrapEnable: i18n(I18nKey.codeWrapEnable),
+	wrapDisable: i18n(I18nKey.codeWrapDisable),
+	expand: i18n(I18nKey.codeExpand),
+	collapse: i18n(I18nKey.codeCollapse),
+};
 ---
 
 <!-- 全局配置载体 -->
@@ -7,5 +19,6 @@ import { backgroundWallpaper, siteConfig } from "@/config";
   id="config-carrier"
   data-hue={siteConfig.themeColor.hue}
   data-wallpaper-mode={backgroundWallpaper.mode}
+  data-code-texts={JSON.stringify(codeTexts)}
 >
 </div>

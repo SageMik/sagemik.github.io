@@ -472,6 +472,13 @@ export const zh_CN: Translation = {
 	[Key.codeCollapsibleExpanded]: "代码块已展开",
 	[Key.codeCollapsibleCollapsed]: "代码块已折叠",
 
+	// 代码块头部按钮 tooltip
+	[Key.codeCopy]: "复制代码",
+	[Key.codeWrapEnable]: "开启换行",
+	[Key.codeWrapDisable]: "关闭换行",
+	[Key.codeExpand]: "展开",
+	[Key.codeCollapse]: "收起",
+
 	// 相册页面
 	[Key.gallery]: "相册",
 	[Key.galleryDescription]: "记录生活中的美好瞬间",

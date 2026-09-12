@@ -482,6 +482,13 @@ export const en: Translation = {
 	[Key.codeCollapsibleExpanded]: "Code block expanded",
 	[Key.codeCollapsibleCollapsed]: "Code block collapsed",
 
+	// Code Block Header Button Tooltips
+	[Key.codeCopy]: "Copy code",
+	[Key.codeWrapEnable]: "Enable word wrap",
+	[Key.codeWrapDisable]: "Disable word wrap",
+	[Key.codeExpand]: "Expand",
+	[Key.codeCollapse]: "Collapse",
+
 	// Gallery Page
 	[Key.gallery]: "Gallery",
 	[Key.galleryDescription]: "Capturing beautiful moments in life",

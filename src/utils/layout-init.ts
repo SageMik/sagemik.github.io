@@ -1,3 +1,4 @@
+import { initCodeWrapToggle } from "@/utils/code-wrap-utils";
 import {
 	registerContentOverflowListeners,
 	scheduleContentOverflowEnhancements,
@@ -20,7 +21,6 @@ import { initImageLoadFadeIn } from "@/utils/lqip-utils";
 import { initScroll } from "@/utils/scroll-utils";
 import { initThemeListener, initWallpaperMode } from "@/utils/setting-utils";
 import { setupSwupTransitions } from "@/utils/swup-transitions";
-import { initTouchCodeCopyReveal } from "@/utils/touch-copy-utils";
 
 /** 布局初始化编排（从 Layout.astro 迁出） */
 export function initLayout(): void {
@@ -55,7 +55,7 @@ export function initLayout(): void {
 	// 滚动路径不再读取布局；先在初始化时填充侧边栏 top 容器可见性缓存
 	refreshSidebarStickyState();
 	initScroll();
-	initTouchCodeCopyReveal();
+	initCodeWrapToggle();
 
 	// 页面加载完成后初始化banner和内容溢出容器
 	if (document.readyState === "loading") {

@@ -483,6 +483,13 @@ export const ru: Translation = {
 	[Key.codeCollapsibleExpanded]: "Блок кода развернут",
 	[Key.codeCollapsibleCollapsed]: "Блок кода свернут",
 
+	// Подсказки кнопок в заголовке блока кода
+	[Key.codeCopy]: "Копировать код",
+	[Key.codeWrapEnable]: "Включить перенос строк",
+	[Key.codeWrapDisable]: "Отключить перенос строк",
+	[Key.codeExpand]: "Развернуть",
+	[Key.codeCollapse]: "Свернуть",
+
 	// Страница галереи
 	[Key.gallery]: "Галерея",
 	[Key.galleryDescription]: "Запечатлеть прекрасные моменты жизни",

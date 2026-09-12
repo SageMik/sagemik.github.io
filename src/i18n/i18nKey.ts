@@ -466,6 +466,13 @@ enum I18nKey {
 	codeCollapsibleExpanded = "codeCollapsibleExpanded",
 	codeCollapsibleCollapsed = "codeCollapsibleCollapsed",
 
+	// 代码块头部按钮的 tooltip
+	codeCopy = "codeCopy",
+	codeWrapEnable = "codeWrapEnable",
+	codeWrapDisable = "codeWrapDisable",
+	codeExpand = "codeExpand",
+	codeCollapse = "codeCollapse",
+
 	// 相册页面
 	gallery = "gallery",
 	galleryDescription = "galleryDescription",

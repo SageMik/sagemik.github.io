@@ -480,6 +480,13 @@ export const ja: Translation = {
 	[Key.codeCollapsibleExpanded]: "コードブロックが展開されました",
 	[Key.codeCollapsibleCollapsed]: "コードブロックが折りたたまれました",
 
+	// コードブロックヘッダーのボタンのツールチップ
+	[Key.codeCopy]: "コードをコピー",
+	[Key.codeWrapEnable]: "折り返しを有効にする",
+	[Key.codeWrapDisable]: "折り返しを無効にする",
+	[Key.codeExpand]: "展開",
+	[Key.codeCollapse]: "折りたたむ",
+
 	// ギャラリーページ
 	[Key.gallery]: "ギャラリー",
 	[Key.galleryDescription]: "人生の美しい瞬間を記録する",
