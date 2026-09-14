@@ -15,6 +15,13 @@
   padding: 0.05rem 0.35rem;
   border-radius: 9999px;
   background: color-mix(in srgb, var(--btn-content) 10%, transparent);
+  transition: none;
+}
+.category-bar .category-pill[data-category-name="__categories__"] {
+  transition: var(--hover-transition);
+  span { /* 禁用“更多”文字的过渡，避免慢一拍变色 */
+    transition: none;
+  }
 }
 .category-pill[data-category-name=""] {
   color: var(--primary);
