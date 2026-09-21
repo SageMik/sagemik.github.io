@@ -133,7 +133,8 @@ const foldOnFilter = collapseAllButFirst;
                       {post.data.category}
                     </span>
                   )}
-                  <span class="min-w-0">{post.data.title}</span>
+                  {/* 标题不加颜色过渡，否则聚焦时变色慢一拍：https://stackoverflow.com/questions/22069877 */}
+                  <span class="min-w-0 transition-none">{post.data.title}</span>
                 </div>
               </div>
             </a>
